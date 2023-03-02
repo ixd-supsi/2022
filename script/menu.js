@@ -3,6 +3,9 @@ function load_menu(){
 
     const pages = [
         {
+            "link": "2021",
+        },
+        {
             "link": "2022",
         },
         {

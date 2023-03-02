@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Avatar Generator</title>
+        <meta name="description"                           content="Atlante Tecnologico">
+        <meta name="author"                                content="Supsi CV2">
+        <meta name="viewport"                              content="width=device-width, initial-scale=1">
+        <meta name="mobile-web-app-capable"                content="yes">
+        <meta name="apple-mobile-web-app-capable"          content="yes">
+        <meta name="theme-color"                           content="black"> <!-- Chrome, Firefox OS and Opera -->
+        <meta name="msapplication-navbutton-color"         content="black"> <!-- Windows Phone -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> <!-- iOS Safari -->
+        <link rel="apple-touch-icon" sizes="192x192" href="icons/icon_192.png">
+        <link rel="shortcut icon"    sizes="32x32"   href="icons/icon_32.png">
+        <style type="text/css">
+            html {
+              box-sizing: border-box;
+            }
+            *, *:before, *:after {
+              box-sizing: inherit;
+            }
+            body {
+                background-color: white;
+                margin: 0;
+            }
+            .main {
+                margin: 3em;
+            }
+            a{
+                text-decoration: none;
+                color: blue;
+            }
+            a:hover{
+                text-decoration: underline;
+            }
+            ul{
+                margin:0;
+                padding: 0;
+                list-style: none;
+            }
+            .author {
+                width: 200px;
+                display: inline-block;
+            }
+            h4{
+                margin: 0 0 1em;
+            }
+            p{
+                margin:0;
+            }
+            footer{
+                margin:0 0 0 0;
+            }
+            .link {
+                margin-left: -1.25em;
+            }
+            .link:before {
+                display: inline-block;
+                width: 1.25em;
+                content: "→";
+            }
+            hr {
+                opacity: 0.2;
+                margin:1em 0 1em 0;
+            }
+            #avatars{
+                display: flex;
+                flex-wrap: wrap;
+                margin: 3em;
+            }
+            #avatars img {
+                width:  12.5% !important;
+                height: auto;
+                font-size: 0.5rem;
+            }
+            img {
+                width: 200px;
+            }
+            @media only screen and (max-width: 600px) {
+                .author {
+                    display: block;
+                }
+                li {
+                    margin-bottom: 1em;
+                }
+                #avatars {
+                    margin: 0;
+                }
+                #avatars img {
+                    width:  25% !important;
+                    height: auto !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+        	<h4>Avatar Generator</h4>
+        	<p>
+                SUPSI<br>
+                Corso di interaction design<br>
+                Docenti: Andreas Gysin, Giovanni Profeta<br>
+                <a class="link" href="https://github.com/ixd-supsi/avatargenerator">codice</a>
+            </p>
+            <hr>
+                <p>
+                    L’avatar generator è un'interfaccia grafica che permetta di generare degli avatar di volti.
+                </p>
+             <hr>
+                <p>2022</p>
+            <br/>
+        </div>
+        <div class="main">
+            <ul style="margin-top: -3rem;">
+                <li><a href="https://moodyl.github.io/Grabbaffiti/">
+                <span class="author">Lauro Gianella</span><span>Grabbaffiti</span>
+                </a></li>
+                <!-- <li>
+                <span class="author">Horvath Sissi</span><span>...</span>
+                </li> -->
+                <li><a href="https://alessialarocca.github.io/through-my-eyes/">
+                <span class="author">Alessia La Rocca</span><span>Through my eyes</span>
+                </a></li>
+                <li><a href="https://nickkgio.github.io/INCUBY/">
+                <span class="author">Nicotera Giorgio</span><span>Incuby</span>
+                </a></li>
+                <li><a href="https://aleplante.github.io/ES_1_Avatar-Generator/">
+                <span class="author">Alessandro Plantera</span><span>Caos</span>
+                </a></li>
+                <li><a href="https://giuliaponti.github.io/moire/">
+                <span class="author">Giulia Ponti</span><span>Moiré</span>
+                </a></li>
+                <li><a href="https://gwentogni.github.io/Fantasy-tipo/">
+                <span class="author">Gwen Togni</span><span>Fantasy-tipo</span>
+                </a></li>
+                <li><a href="https://gabrielevanzz.github.io/avatarss/">
+                <span class="author">Gabriele Vanzetta</span><span>Let me speak</span>
+                </a></li> 
+                <li><a href="https://giadavegliante.github.io/Chibi-Generator/">
+                <span class="author">Giada Vegliante</span><span>Chibi Generator</span>
+                </a></li>
+                <li><a href="https://elizob.github.io/Pixel_Avatar/">
+                <span class="author">Elias Zobrist</span><span>Pixel Avatar</span>
+                </a></li>
+            </ul>
+        </div>
+        <div id="avatars"></div>
+        <div class="main">
+            <footer>
+                <hr>
+                <ul id ="menu"></ul>
+            </footer>
+        </div>
+    </body>
+    <script type="text/javascript" src="script/avatars.js"></script>
+    <script type="text/javascript" src="script/menu.js"></script>
+</html>
+

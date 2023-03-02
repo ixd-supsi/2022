@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let cameoMask
+		let layer1
+
+		function preload() {
+			cameoMask = loadImage("cameo_mask.png")
+		}
+
+		function setup(){
+			createCanvas(400, 400)
+			layer1 = createGraphics(width, height)
+		}
+
+		function draw(){
+
+			// BG (layer 0) ----------------------------------------------------
+			background(255,255,0)
+			noStroke()
+			fill(0,255,0)
+			const spessore = 8
+			const passo = spessore * 2
+			const num = width / passo + 1
+
+			const o = passo * (frameCount % 30) / 30
+
+			for(let i=0; i<num; i++) {
+				const rx = i * passo - o
+				rect( rx, 0, spessore, height)
+			}
+
+			// Layer 1 ---------------------------------------------------------
+			layer1.background(255,0,0)
+			layer1.noStroke()
+			layer1.fill(255,120,255)
+
+			const passoX = 15
+			const passoY = passoX * sqrt(3) / 2
+			const diametro = 10
+
+			const numX = floor(width / passoX) - 1
+			const numY = floor(height / passoY) - 1
+			const margineX = (width - (numX - 1) * passoX) / 2 - passoX / 4
+			const margineY = (height - (numY - 1) * passoY) / 2
+
+			const offsX = (frameCount % 20) / 20 * passoX
+			for(let j=0; j<numY; j++) {
+				for(let i=0; i<numX; i++) {
+					const cx = margineX + i * passoX + passoX/2 * (j % 2) + offsX
+					const cy = margineY + j * passoY
+					layer1.circle(cx, cy, diametro)
+				}
+			}
+
+			// Composizione finale ---------------------------------------------
+			let img = layer1.get()
+			img.mask(cameoMask)
+
+			image(img, 0, 0)
+		}
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

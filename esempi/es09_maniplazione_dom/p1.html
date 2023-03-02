@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+
+
+	<script type="text/javascript">
+
+		const divs = []
+		for (let i=0; i<100; i++) {
+			const d = document.createElement('div')
+			d.innerHTML = 'ciao'
+
+			d.style.backgroundColor = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')'
+			d.style.position = 'absolute'
+			d.style.borderRadius = '5px'
+			d.style.left = 'calc(' + Math.random() * 100 + 'vw - 50px)'
+			d.style.top = 'calc(' + Math.random() * 100 + 'vh - 50px)'
+
+
+			document.body.appendChild(d)
+
+			divs.push(d)
+
+		}
+
+		requestAnimationFrame(loop)
+
+		function loop(t){
+
+			requestAnimationFrame(loop)
+
+			for (let i=0; i<divs.length; i++) {
+				const d = divs[i]
+				const l = Math.sin(i * t * 0.00007) * 50 + 60
+				d.style.top = Math.sin(i * 0.1 + t * 0.005) * 30 + 50 + 'vh'
+				d.style.left = (i / divs.length) * 100 + 'vw'
+				d.style.marginTop = -l/2 + 'px'
+				d.style.marginLeft = -l/2 + 'px'
+				d.style.width = l + 'px'
+				d.style.height = l + 'px'
+			}
+		}
+
+
+	</script>
+</body>
+</html>

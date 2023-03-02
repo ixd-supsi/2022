@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let delfini
+		let delfiniMask
+
+		function preload() {
+			delfini = loadImage("dolphins.jpg")
+			delfiniMask = loadImage("dolphins_mask.png")
+		}
+
+		function setup(){
+			createCanvas(400, 400)
+		}
+
+		function draw(){
+			const r = map(sin(frameCount*0.03), -1, 1, 0, 255)
+			const g = map(sin(frameCount*0.04), -1, 1, 0, 255)
+			const b = map(sin(frameCount*0.05), -1, 1, 0, 255)
+			background(g,r,b)
+
+			noStroke()
+			fill(b,r,g)
+			push()
+			translate(width/2,height/2)
+			rectMode(CENTER)
+			const num = 50
+			const spess = map(sin(frameCount * 0.01),-1,1,1,20)
+			rotate(frameCount * 0.01)
+			for(let i=0; i<num; i++){
+				rect(0, 0, 1000, spess)
+				rotate(TAU/num)
+			}
+			pop()
+
+			delfini.mask(delfiniMask)
+			image(delfini, 0, 0)
+		}
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

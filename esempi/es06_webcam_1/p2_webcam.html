@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let capture
+
+		function setup(){
+			createCanvas(400, 400)
+			capture = createCapture(VIDEO)
+			capture.size(320, 240)
+			capture.hide()
+		}
+		function draw(){
+			background(220)
+
+			capture.loadPixels()
+
+			for (let j=0; j<capture.height; j++) {
+				for (let i=0; i<capture.width; i++) {
+					const idx = (i + j * capture.width) * 4
+					const r = capture.pixels[idx + 0]
+					const g = capture.pixels[idx + 1]
+					const b = capture.pixels[idx + 2]
+					capture.pixels[idx + 0] = g
+					capture.pixels[idx + 1] = b
+					capture.pixels[idx + 2] = r
+				}
+			}
+		 	capture.updatePixels()
+
+		 	translate(capture.width, 0)
+		 	scale(-1, 1)
+			image(capture, 0, 0, capture.width, capture.height)
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

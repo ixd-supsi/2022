@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let cameoMask
+
+		let layer1
+
+
+		function preload() {
+			cameoMask = loadImage("cameo_mask.png")
+		}
+
+		function setup(){
+			createCanvas(400, 400)
+			layer1 = createGraphics(width, height)
+		}
+
+		function draw(){
+
+			background(220,220,220)
+
+			layer1.background(255,0,0)
+
+			let img = layer1.get()
+			img.mask(cameoMask)
+
+			image(img, 0, 0)
+
+		}
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

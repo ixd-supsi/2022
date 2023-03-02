@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prova 4</title>
+        <link rel="stylesheet" href="main.css">
+        <style type="text/css">
+
+        	.interfaccia {
+        		background-color: rgba(100,200,255,0.3);
+        		position: absolute;
+        		right: 0;
+        		top: 0;
+        		bottom: 0;
+        		padding: 15px;
+        		width: 200px;
+        	}
+        	.interfaccia input {
+        		width:  100%;
+        	}
+
+        	.interfaccia input[type="range"] {
+        		height: 1px;
+        		appearance: none;
+        		-webkit-appearance: none;
+        		border: none;
+        		background-color: black;
+        		display: block;
+        	}
+
+        	.interfaccia select {
+        		width: 100%;
+        		display: block;
+        	}
+
+        	.interfaccia label {
+        		margin-top: 1em;
+        		display: block;
+        	}
+
+        </style>
+    </head>
+    <body>
+       <div class="contenitore">
+            <div class="layer faccia">
+                <img src="assets/faccia_0.png" alt="">
+            </div>
+            <div class="layer bocca">
+                <img src="assets/bocca_0.png" alt="">
+            </div>
+            <div class="layer naso">
+                <img src="assets/naso_0.png" alt="">
+            </div>
+            <div class="layer occhio occhio-sx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>  
+            <div class="layer occhio occhio-dx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>                          
+        </div>
+
+        <div class="interfaccia">
+
+        	<label for="#input-volto">volto</label>
+			<input id="input-volto" type="range" step="1" value="0" min="0" max="3" >
+
+			<label for="#input-naso">naso</label>
+			<select id="input-naso">
+				<option value="0" >puntini</option>
+				<option value="1">triangolo</option>
+				<option value="2">elle (L)</option>
+			</select>
+
+			<label for="#input-bocca">bocca</label>
+			<input id="input-bocca" type="number">
+
+        </div>
+
+        <script>
+
+        	document.querySelector("#input-volto").addEventListener("input", function(e){
+        		const v = e.target.value
+	            const immagine_faccia = document.querySelector(".faccia img")
+	            immagine_faccia.src = "assets/faccia_" + v + ".png"
+        	})
+
+        	document.querySelector("#input-naso").addEventListener("change", function(e){
+        		const v = e.target.value
+        		document.querySelector(".naso img").src = "assets/naso_" + v + ".png"
+        	})
+
+        	document.querySelector("#input-bocca").addEventListener("input", function(e) {
+        		const v = e.target.value
+        		document.querySelector(".bocca img").src = "assets/bocca_" + v + ".png"
+        	})
+
+
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+		canvas {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+
+	<script>
+
+		class Dot {
+			constructor(x, y, velDamp) {
+				this.px = x
+				this.py = y
+				this.vx = 0
+				this.vy = 0
+				this.velDamp = velDamp
+			}
+			step(x, y) {
+				const dx = x - this.px
+				const dy = y - this.py
+				this.vx += dx * this.velDamp
+				this.vy += dy * this.velDamp
+				this.px = this.px + this.vx
+				this.py = this.py + this.vy
+				this.vx *= 0.95
+				this.vy *= 0.95
+			}
+		}
+
+		let dotA, dotB
+
+		function setup(){
+			createCanvas(windowWidth, windowHeight)
+
+			dotA = new Dot(width/2, height/2, 0.030)
+			dotB = new Dot(width/2, height/2, 0.035)
+
+			background(255,0,0)
+		}
+
+		function keyPressed(){
+			background(255,0,0)
+		}
+
+		function mousePressed(){
+			dotA.vx = 0
+			dotA.vy = 0
+			dotA.px = mouseX
+			dotA.py = mouseY
+
+			dotB.vx = 0
+			dotB.vy = 0
+			dotB.px = mouseX
+			dotB.py = mouseY
+		}
+
+		function draw(){
+
+			// if (frameCount % 5 == 0) {
+			// 	fill(255,0,0, 10)
+			// 	rect(0, 0, width, height)
+			// }
+
+			noStroke()
+			fill(0)
+
+			if (mouseIsPressed){
+				beginShape(QUADS)
+
+				vertex(dotA.px, dotA.py)
+				vertex(dotB.px, dotB.py)
+
+				dotA.step(mouseX, mouseY)
+				dotB.step(mouseX, mouseY)
+
+				vertex(dotB.px, dotB.py)
+				vertex(dotA.px, dotA.py)
+
+				endShape()
+			} else {
+				dotA.step(mouseX, mouseY)
+				dotB.step(mouseX, mouseY)
+			}
+		}
+		function windowResized(){
+			resizeCanvas(windowWidth, windowHeight)
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

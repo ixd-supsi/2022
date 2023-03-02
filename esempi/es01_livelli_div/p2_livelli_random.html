@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prova 2</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+       <div class="contenitore">
+            <div class="layer faccia">
+                <img src="assets/faccia_0.png" alt="">
+            </div>
+            <div class="layer bocca">
+                <img src="assets/bocca_0.png" alt="">
+            </div>
+            <div class="layer naso">
+                <img src="assets/naso_0.png" alt="">
+            </div>
+            <div class="layer occhio occhio-sx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>  
+            <div class="layer occhio occhio-dx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>                          
+        </div>
+        <script>
+                        
+            const numero_faccia = Math.floor( Math.random() * 3 )
+            const immagine_faccia = document.querySelector(".faccia img")
+            immagine_faccia.src = "assets/faccia_" + numero_faccia + ".png"
+
+            const numero_bocca = Math.floor( Math.random() * 3 )
+            const immagine_bocca = document.querySelector(".bocca img")
+            immagine_bocca.src = "assets/bocca_" + numero_bocca + ".png"
+
+            const numero_naso = Math.floor( Math.random() * 3 )
+            const immagine_naso = document.querySelector(".naso img")
+            immagine_naso.src = "assets/naso_" + numero_naso + ".png"
+
+            const numero_occhio_sx = Math.floor( Math.random() * 3 )
+            const immagine_occhio_sx = document.querySelector(".occhio-sx img")
+            immagine_occhio_sx.src = "assets/occhio_" + numero_occhio_sx + ".png"
+
+            const numero_occhio_dx = Math.floor( Math.random() * 3 )
+            const immagine_occhio_dx = document.querySelector(".occhio-dx img")
+            immagine_occhio_dx.src = "assets/occhio_" + numero_occhio_dx + ".png"
+
+        </script>
+    </body>
+</html>

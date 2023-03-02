@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Fast Face Detection</title>
+	</head>
+	<body>
+		<video autoplay="true"></video>
+		<canvas></canvas>
+		<pre></pre>
+
+		<script src="./lib/face-api/face-api.min.js"></script>
+		<script type="text/javascript">
+
+			init()
+
+			async function init() {
+
+				// Variabili per le coordinate del centro del volto (0.0..1.0)
+				let centerX, centerY
+				// Variabili “smussate” (0.0..1.0)
+				let smoothCenterX, smoothCenterY
+				// Boolean: il volto è stato individuato (true / false)
+
+				let isFace = false
+				const canvas = document.querySelector('canvas')
+				const ctx = canvas.getContext('2d')
+
+				// -- 1. carica i modelli --------------------------------------
+
+				const MODELS_URI = './lib/face-api/weights'
+				await faceapi.nets.tinyFaceDetector.loadFromUri(MODELS_URI)
+				console.log('Tutti i modelli sono stati caricati.')
+
+				// -- 2. inizializza la webcam ---------------------------------
+
+				const webcam = document.querySelector('video');
+
+				webcam.addEventListener('play', function() {
+					console.log('Webcam inizializzata e avviata.')
+					webcam.width = webcam.videoWidth / 2
+					webcam.height = webcam.videoHeight / 2
+					avviaFaceDetect(webcam)
+					setup()
+				})
+
+				// -- 3. avvia l’app -------------------------------------------
+
+				if (navigator.mediaDevices.getUserMedia) {
+					return navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+						webcam.srcObject = stream
+					}).catch(function(error) {
+						console.warn('C’è stato un problema con la webcam!')
+						console.log(error)
+					})
+				}
+
+				// -- 4. app principale ----------------------------------------
+
+				function setup() {
+
+					requestAnimationFrame(loop)
+
+					canvas.width = webcam.width
+					canvas.height = webcam.height
+					centerX = 0.5
+					centerY = 0.5
+					smoothCenterX = centerX
+					smoothCenterY = centerY
+				}
+
+				function loop() {
+
+					requestAnimationFrame(loop)
+
+					const width = canvas.width
+					const height = canvas.height
+
+					smoothCenterX += (centerX - smoothCenterX) * 0.1
+					smoothCenterY += (centerY - smoothCenterY) * 0.1
+
+					ctx.fillStyle = 'rgb(220,220,220)'
+					ctx.fillRect(0, 0, width, height)
+
+					// -- Visualizza i dati "raw" ------------------------------
+
+					ctx.strokeStyle = 'rgb(190,190,190)'
+					ctx.beginPath()
+					ctx.moveTo(centerX * width, 0)
+					ctx.lineTo(centerX * width, height)
+					ctx.moveTo(0, centerY * height)
+					ctx.lineTo(width, centerY * height)
+					ctx.stroke()
+
+					// -- Visualizza i dati "smooth" ---------------------------
+
+					ctx.strokeStyle = 'red'
+					ctx.beginPath()
+					ctx.moveTo(smoothCenterX * width, 0)
+					ctx.lineTo(smoothCenterX * width, height)
+					ctx.moveTo(0, smoothCenterY * height)
+					ctx.lineTo(width, smoothCenterY * height)
+					ctx.stroke()
+
+					// -- Stampa info ------------------------------------------
+
+					let out = ''
+					out += "isFace        : " + isFace + "<br>"
+					out += "centerX       : " + centerX.toFixed(2) + " [percentuale]<br>"
+					out += "centerY       : " + centerY.toFixed(2) + " [percentuale]<br>"
+					out += "smoothCenterX : " + smoothCenterX.toFixed(2) + " [percentuale]<br>"
+					out += "smoothCenterY : " + smoothCenterY.toFixed(2) + " [percentuale]<br>"
+
+					document.querySelector('pre').innerHTML = out
+				}
+
+				function avviaFaceDetect(videoSrc) {
+					console.log('FaceDetect avviato.')
+
+					setInterval(async function() {
+						const detections = await faceapi.detectSingleFace(videoSrc, new faceapi.TinyFaceDetectorOptions())
+						if (detections) {
+							const box = detections.box
+							// centerX e centerY sono normalizzati!
+							centerX = (box._x + box._width / 2) / videoSrc.videoWidth
+							centerY = (box._y + box._height / 2) / videoSrc.videoHeight
+							isFace = true
+						} else {
+							isFace = false
+						}
+					}, 60)
+				}
+			}
+
+		</script>
+	</body>
+</html>

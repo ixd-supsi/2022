@@ -1,0 +1,16 @@
+-------------------------------------------------------
+face-api.js
+-------------------------------------------------------
+
+Repository:
+https://github.com/justadudewhohacks/face-api.js
+
+Manuale (API):
+https://justadudewhohacks.github.io/face-api.js/docs/
+
+Per uso diretto, aggiungere la libreria al progetto:
+https://github.com/justadudewhohacks/face-api.js/blob/master/dist/face-api.min.js
+
+NOTA: 
+Al vostro progetto inserita anche la licenza di face-api.js
+

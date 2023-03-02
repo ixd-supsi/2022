@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let delfini
+
+		function preload() {
+			delfini = loadImage("dolphins.jpg")
+		}
+
+		function setup(){
+			createCanvas(400, 400)
+			delfini.resize(200, 200)
+			noSmooth()
+
+			const obj = {
+				a : 10,
+				b : "ciao"
+			}
+
+			obj.c = 'xxxx'
+
+			console.log(obj)
+		}
+
+		function swappa(raggio, num){
+
+			delfini.loadPixels()
+			const arr = delfini.pixels
+			const w = delfini.width
+			const h = delfini.height
+
+			for (let i=0; i<num; i++) {
+				const x1 = Math.floor(random(w))
+				const y1 = Math.floor(random(h))
+
+				const x2 = constrain(Math.floor(x1 + random(-raggio, raggio)), 0, w-1)
+				const y2 = constrain(Math.floor(y1 + random(-raggio, raggio)), 0, h-1)
+
+				const col1 = getPixel(x1, y1, arr, w)
+				const col2 = getPixel(x2, y2, arr, w)
+
+				setPixel(col1, x2, y2, arr, w)
+				setPixel(col2, x1, y1, arr, w)
+			}
+
+			delfini.updatePixels()
+
+		}
+
+
+		function colora() {
+			delfini.loadPixels()
+			const arr = delfini.pixels
+			const w = delfini.width
+			const h = delfini.height
+
+			for (let j=0; j<h; j++) {
+				for (let i=0; i<w; i++) {
+					const pix = getPixel(i, j, arr, w)
+					pix.r += random(-10, 11)
+					pix.g = pix.r
+					pix.b = pix.r
+					setPixel(pix, i, j, arr, w)
+				}
+			}
+			delfini.updatePixels()
+		}
+
+		function getPixel(x, y, arr, w) {
+			const idx = (x + y * w) * 4
+			return {
+				r : arr[idx + 0],
+				g : arr[idx + 1],
+				b : arr[idx + 2],
+				//a : arr[idx + 3],
+			}
+		}
+
+		function setPixel(col, x, y, arr, w) {
+			const idx = (x + y * w) * 4
+			arr[idx + 0] = col.r
+			arr[idx + 1] = col.g
+			arr[idx + 2] = col.b
+			//arr[idx + 3] = col.a
+		}
+
+		function draw(){
+
+			swappa(delfini.width, 10000)
+			//colora()
+
+			image(delfini, 0, 0, width, height)
+
+		}
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

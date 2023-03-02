@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prova 5</title>
+        <link rel="stylesheet" href="main.css">
+        <style type="text/css">
+
+        	.interfaccia {
+        		background-color: rgba(100,200,255,0.3);
+        		position: absolute;
+        		right: 0;
+        		top: 0;
+        		bottom: 0;
+        		padding: 15px;
+        		width: 200px;
+        	}
+        	.interfaccia input {
+        		width:  100%;
+        	}
+        	.interfaccia input[type="range"] {
+        		height: 1px;
+        		appearance: none;
+        		-webkit-appearance: none;
+        		border: none;
+        		background-color: black;
+        		display: block;
+        	}
+        	.interfaccia select {
+        		width: 100%;
+        		display: block;
+        	}
+        	.interfaccia label {
+        		margin-top: 1em;
+        		display: block;
+        	}
+            #faccia {
+                background-image: url("assets/svg/face_02.svg");
+            }
+            #bocca {
+                width:  60px;
+                height:  60px;
+                top:  250px;
+                left:  170px;
+            }
+            button {
+                background-color: lightgray;
+            }
+
+
+        </style>
+    </head>
+    <body>
+       <div class="contenitore">
+            <div id="faccia" class="layer faccia">
+            </div>
+            <div id="bocca" class="layer">
+                <object id="svg_object" data="assets/svg/smile.svg" type="image/svg+xml"></object>
+            </div>                     
+        </div>        
+
+        <div class="interfaccia">
+
+            <label for="#input-volto">volto</label>
+            <button id="v1">b1</button>
+            <button id="v2">b2</button>
+            <button id="v3">b3</button>
+
+            <label for="#input-bocca">bocca</label>
+            <input type="range" min="1" max="255" id="input-bocca">
+        </div>
+
+        <script type="text/javascript">
+            
+            // selezione un elmento dentro un svg e gli cambia il colore 
+            window.addEventListener("load", function() {
+                let svg = document.getElementById("svg_object")
+                let smile = svg.contentDocument.querySelector(".st0")
+
+                const bocca = window.addEventListener("change", function(e) {
+                    let value = e.target.value;
+                    console.log(value);
+                    let color = "hsl(" + value +", 100%, 50%)";
+                    smile.setAttribute("fill",color);
+                })
+            });
+
+            // selezione un attributo tramite bottone e cambia l'immagine di sfondo
+            const src = document.getElementById("faccia");
+            const b1 = document.querySelector("#v1")
+            b1.addEventListener("click", function(e) {
+                src.style.backgroundImage="url(assets/svg/face_01.svg)"
+                b1.style.backgroundColor="red";
+                b2.style.backgroundColor="lightgray";
+                b3.style.backgroundColor="lightgray";
+            })
+
+            const b2 = document.querySelector("#v2")
+            b2.addEventListener("click", function(e) {
+                src.style.backgroundImage="url(assets/svg/face_02.svg)"
+                b2.style.backgroundColor="red";
+                b1.style.backgroundColor="lightgray";
+                b3.style.backgroundColor="lightgray";
+            })
+
+            const b3 = document.querySelector("#v3")
+            b3.addEventListener("click", function(e) {
+                src.style.backgroundImage="url(assets/svg/face_03.svg)"
+                b3.style.backgroundColor="red";
+                b1.style.backgroundColor="lightgray";
+                b2.style.backgroundColor="lightgray";
+            })
+
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+

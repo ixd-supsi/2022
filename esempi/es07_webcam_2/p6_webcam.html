@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<script>
+
+		let capture
+		const tabella = []
+
+		function setup(){
+			createCanvas(640, 480)
+			capture = createCapture(VIDEO)
+			capture.size(640/8, 480/8)
+			capture.hide()
+		}
+
+		function draw(){
+			//background(220)
+			push()
+			translate(mouseX, mouseY)
+			image(capture, -capture.width/2, -capture.height/2)
+			pop()
+
+			noStroke()
+			const r = map(sin(frameCount * 0.014), -1, 1, 0, 255)
+			const g = map(sin(frameCount * 0.015), -1, 1, 0, 255)
+			const b = map(sin(frameCount * 0.018), -1, 1, 0, 255)
+			fill(r,g,b)
+			ellipse(width - mouseX, mouseY, 100, 100)
+
+			const copia = get()
+			translate(width/2, height/2)
+			//scale(1.015, 1.015)
+			const s = map(sin(frameCount * 0.012), -1, 1, 0.98, 1.04)
+			scale(s, s)
+			rotate(sin(frameCount * 0.013) * 0.03)
+			image(copia, -width/2, -height/2)
+
+		}
+		function keyPressed(){
+			if (key == 's') {
+				save(Date.now() + '.png')
+			}
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

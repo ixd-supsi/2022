@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Face Detection</title>
+	</head>
+	<body>
+		<video autoplay="true"></video>
+		<canvas></canvas>
+		<pre></pre>
+
+		<script src="./lib/face-api/face-api.min.js"></script>
+
+		<script type="text/javascript">
+
+			init()
+
+			async function init() {
+
+				// -- 1. carica i modelli -----------------------------------------
+				const MODELS_URI = './lib/face-api/weights'
+				await loadModels(MODELS_URI)
+				console.log('Tutti i modelli sono stati caricati.')
+
+				// -- 2. inizializza la webcam ------------------------------------
+				const webcam = document.querySelector('video');
+				startVideoStream(webcam)
+
+				// -- 3. avvia l’app ----------------------------------------------
+				webcam.addEventListener('play', function() {
+					console.log('Webcam inizializzata e avviata.')
+					webcam.width = webcam.videoWidth / 2
+					webcam.height = webcam.videoHeight / 2
+					run()
+				})
+
+
+				// -------------------------------------------------------------
+				// ageGenderNet
+				// faceExpressionNet
+				// faceLandmark68Net
+				// faceLandmark68TinyNet
+				// faceRecognitionNet
+				// ssdMobilenetv1
+				// tinyFaceDetector
+				// tinyYolov2
+
+				async function loadModels(uri) {
+
+				 	// console.log('Carico tinyFaceDetector...')
+				 	// await faceapi.nets.tinyFaceDetector.loadFromUri(uri)
+
+				 	console.log('Carico ssdMobilenetv1...')
+				 	await faceapi.nets.ssdMobilenetv1.loadFromUri(uri)
+
+				 	console.log('Carico faceExpressionNet...')
+					await faceapi.nets.faceExpressionNet.loadFromUri(uri)
+
+				 	console.log('Carico faceLandmark68Net...')
+					await faceapi.nets.faceLandmark68Net.loadFromUri(uri)
+
+				 	console.log('Carico ageGenderNet...')
+					await faceapi.nets.ageGenderNet.loadFromUri(uri)
+				}
+
+				// -------------------------------------------------------------
+
+				function startVideoStream(el) {
+					if (navigator.mediaDevices.getUserMedia) {
+						return navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+							el.srcObject = stream
+						}).catch(function(error) {
+							console.warn('C’è stato un problema con la webcam!')
+							console.log(error)
+						})
+					}
+				}
+
+				// -------------------------------------------------------------
+
+				function getMaxValue(obj) {
+					let max = 0
+					let key = ''
+					for (const k in obj) {
+						if (obj[k] > max) {
+							max = obj[k]
+							key = k
+						}
+					}
+					return {
+						key : key,
+						value : max
+					}
+				}
+
+				function run() {
+					const canvas = document.querySelector('canvas')
+					const ctx = canvas.getContext('2d')
+					const pre = document.querySelector('pre')
+
+					const displaySize = { width: webcam.width, height: webcam.height }
+
+					canvas.width = webcam.width
+					canvas.height = webcam.height
+
+					setInterval(async function() {
+
+						// -- all faces (più lento!) ---------------------------
+						// const detections = await faceapi.detectAllFaces(webcam)
+						// const detections = await faceapi.detectAllFaces(webcam).withFaceExpressions()
+						// const detections = await faceapi.detectAllFaces(webcam).withFaceLandmarks()
+						// const detections = await faceapi.detectAllFaces(webcam).withFaceLandmarks().withFaceExpressions()
+						// const detections = await faceapi.detectAllFaces(webcam).withFaceLandmarks().withAgeAndGender()
+						// const detections = await faceapi.detectAllFaces(webcam).withFaceLandmarks().withFaceExpressions().withAgeAndGender()
+
+						// -- single face --------------------------------------
+						// const detections = await faceapi.detectSingleFace(webcam)
+						// const detections = await faceapi.detectSingleFace(webcam).withFaceExpressions()
+						// const detections = await faceapi.detectSingleFace(webcam).withFaceLandmarks()
+						const detections = await faceapi.detectSingleFace(webcam).withFaceLandmarks().withFaceExpressions()
+						// const detections = await faceapi.detectSingleFace(webcam).withFaceLandmarks().withAgeAndGender()
+						// const detections = await faceapi.detectSingleFace(webcam).withFaceLandmarks().withFaceExpressions().withAgeAndGender()
+
+						if (detections) {
+
+							const data = faceapi.resizeResults(detections, displaySize)
+
+							// -- cancelliamo il canvas ------------------------
+							ctx.fillStyle = 'rgb(220,220,220)'
+							ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+							// -- funzoni interne per il disegno / debug -------
+							faceapi.draw.drawDetections(canvas, data, { withScore: false })
+							faceapi.draw.drawFaceLandmarks(canvas, data)
+							// faceapi.draw.drawFaceExpressions(canvas, data)
+
+							// -- tutto il dataset -----------------------------
+							// pre.innerHTML = JSON.stringify(data, null, 4)
+
+							// -- espressione ----------------------------------
+							pre.innerHTML = ""
+
+							const expr = getMaxValue(data.expressions)
+							pre.innerHTML += "expression: " + expr.key + " (" + parseFloat(expr.value).toFixed(2) + ")\n"
+
+
+							// -- età e sesso ----------------------------------
+							pre.innerHTML += "gender: " + data.gender + "\n"
+							pre.innerHTML += "age: " + Math.round(data.age)  + "\n"
+
+							// -- parti del volto ------------------------------
+							// const jawOutline = data.landmarks.getJawOutline()
+							// const nose = data.landmarks.getNose()
+							// const mouth = data.landmarks.getMouth()
+							// const leftEye = data.landmarks.getLeftEye()
+							// const rightEye = ldata.andmarks.getRightEye()
+							// const leftEyeBbrow = data.landmarks.getLeftEyeBrow()
+							// const rightEyeBrow = data.landmarks.getRightEyeBrow()
+							// pre.innerHTML = JSON.stringify(nose, null, 4)
+							// pre.innerHTML = JSON.stringify(leftEye, null, 4)
+
+						} else {
+							ctx.fillStyle = 'red'
+							ctx.fillRect(0, 0, canvas.width, canvas.height)
+						}
+
+					}, 100)
+				}
+			}
+
+		</script>
+	</body>
+</html>

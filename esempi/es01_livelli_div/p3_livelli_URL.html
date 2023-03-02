@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prova 3</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+       <div class="contenitore">
+            <div class="layer faccia">
+                <img src="assets/faccia_0.png" alt="">
+            </div>
+            <div class="layer bocca">
+                <img src="assets/bocca_0.png" alt="">
+            </div>
+            <div class="layer naso">
+                <img src="assets/naso_0.png" alt="">
+            </div>
+            <div class="layer occhio occhio-sx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>  
+            <div class="layer occhio occhio-dx">
+                <img src="assets/occhio_0.png" alt="">
+            </div>                          
+        </div>
+        <script>
+
+            const url = new URL(location)
+            const dna = url.searchParams.get("dna")
+            let immagini = []
+            if (dna != null) {                
+                immagini = dna.padEnd(5,'0').split('').map(e => {
+                    const v = parseInt(e)
+                    console.log(v)
+                    if (!isNaN(v) && v!==undefined) return v
+                    return 0
+                })
+            } else {
+                immagini = [
+                    Math.floor( Math.random() * 3 ),
+                    Math.floor( Math.random() * 3 ),
+                    Math.floor( Math.random() * 3 ),
+                    Math.floor( Math.random() * 4 ),
+                    Math.floor( Math.random() * 4 ),
+                ]
+            }
+                                    
+            document.querySelector(".faccia img").src = "assets/faccia_" + immagini[0] + ".png"
+            document.querySelector(".bocca img").src = "assets/bocca_" + immagini[1] + ".png"
+            document.querySelector(".naso img").src = "assets/naso_" + immagini[2] + ".png"
+            document.querySelector(".occhio-dx img").src = "assets/occhio_" + immagini[3] + ".png"            
+            document.querySelector(".occhio-dx img").src = "assets/occhio_" + immagini[4] + ".png"
+
+        </script>
+    </body>
+</html>

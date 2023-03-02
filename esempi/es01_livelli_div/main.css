@@ -1,0 +1,53 @@
+body {
+    background-color: white;
+    margin: 0;
+}
+.contenitore {
+    position: absolute;
+    background-color: rgb(240,240,240);
+    width: 400px;
+    height: 400px;
+    left: 50%; /* posizionamento da sinistra */
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+}  
+.layer img {                
+    width:100%;
+    height:100%;
+}                   
+.faccia {
+    background-color: red;
+    width:100%;
+    height:100%;
+} 
+.naso {                
+    background-color: green;
+    width:50%;
+    height:50%;
+    left: 25%;
+    top: 20%;
+}
+.bocca {                
+    background-color: orange;
+    width: 60%;
+    height: 25%;
+    left: 20%;
+    top: 65%;
+}
+.occhio {
+    background-color: aquamarine;
+    width: 20%;
+    height: 20%;
+    top: 30%;
+}
+.occhio-dx {
+    right: 20%;
+}
+.occhio-sx {
+    left: 20%;
+}            
+.layer {
+    position:absolute;
+    background-color: transparent;
+}

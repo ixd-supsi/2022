@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		canvas {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -200px;
+			margin-top: -200px;
+
+		}
+	</style>
+</head>
+<body>
+
+	<script>
+
+		function setup(){
+			// Questa funzione crea un canvas di 400x400 pixel
+			createCanvas(400, 400)
+			background(200)
+		}
+
+		function draw(){
+			if (mouseIsPressed) {
+
+				const r = map(sin(frameCount * 0.021), -1, 1, 0, 255)
+				const g = map(sin(frameCount * 0.022), -1, 1, 0, 255)
+				const b = map(sin(frameCount * 0.023), -1, 1, 0, 255)
+				const d = map(sin(frameCount * 0.020), -1, 1, 10, 100)
+
+				fill(r,g,b)
+				ellipse(mouseX, mouseY, d, d)
+				ellipse(width-mouseX, mouseY, d, d)
+			}
+		}
+
+		function keyPressed(){
+			if (key == 'x') {
+				background(200)
+			} else if (key == 's') {
+				save("immagine.png")
+			}
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+</body>
+</html>

@@ -22,10 +22,6 @@ function load_menu(){
             "name": "Inter-faccia",
             "link": "inter-faccia"
         },
-        // {
-        //     "name": "Marionetta digitale (new)",
-        //     "link": "marionettadigitale"
-        // },
         {
             "name": "Parole in Codice",
             "link": "paroleincodice"

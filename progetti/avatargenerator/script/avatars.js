@@ -32,11 +32,6 @@ const projects = [
         "link": "https://elizob.github.io/Pixel_Avatar/"
     }
 ]
-
-    // {
-    //     "name": "grabbaffiti",
-    //     "link": "https://moodyl.github.io/Grabbaffiti/"
-    // },
     
 const students = [
     "alessia",
